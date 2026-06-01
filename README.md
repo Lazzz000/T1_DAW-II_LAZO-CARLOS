@@ -19,6 +19,64 @@ La solución está compuesta por 3 microservicios integrados:
 3. **cita-service (Puerto 8002):** * **Rol:** Consumidor. 
    * **Responsabilidad:** Recibe solicitudes de agendamiento y utiliza **OpenFeign** para consultar a `paciente-service`. Aplica la lógica de negocio para aprobar o rechazar cirugías en base al estado de riesgo del paciente.
 
+## 📁 Estructura de Paquetes y Clases
+A continuación se detalla la organización interna de los tres proyectos en el espacio de trabajo, evidenciando la aplicación de una arquitectura limpia dividida en capas de responsabilidad:
+
+eureka-server
+
+![Explorador de Proyectos en STS Eureka Server](./docs/estructura-proyecto_eureka-server.png)
+
+paciente-service
+
+![Explorador de Proyectos en STS Paciente Service](./docs/estructura-proyecto_paciente-service.png)
+
+cita-service
+
+![Explorador de Proyectos en STS Cita Service](./docs/estructura-proyecto_cita-service.png)
+### 1. eureka-server
+```text
+eureka-server/
+├── src/main/java/
+│   └── com.cibertec.eurekaserver/
+│       └── EurekaServerApplication.java (Clase principal del Servidor)
+└── src/main/resources/
+    └── application.properties (Configuración del puerto 8761)
+```
+### 2. paciente-service (Microservicio Proveedor)
+```text
+paciente-service/
+├── src/main/java/
+│   └── com.cibertec.paciente/
+│       ├── controller/
+│       │   └── PacienteController.java (Exposición de endpoints REST)
+│       ├── dto/
+│       │   └── PacienteDto.java (Estructura de datos clínicos)
+│       ├── service/
+│       │   └── PacienteService.java (Lógica de negocio y mock de datos)
+│       └── PacienteServiceApplication.java (Clase de arranque con @EnableDiscoveryClient)
+└── src/main/resources/
+    └── application.properties (Puerto 8001 y vinculación a Eureka)
+```
+### 3. cita-service (Microservicio Consumidor)
+```text
+cita-service/
+├── src/main/java/
+│   └── com.cibertec.cita/
+│       ├── client/
+│       │   └── PacienteClient.java (Interfaz OpenFeign para comunicación sincrónica)
+│       ├── controller/
+│       │   └── CitaController.java (Punto de entrada para agendamiento)
+│       ├── dto/
+│       │   ├── CitaRequest.java (DTO de entrada del contrato API)
+│       │   ├── CitaResponse.java (DTO de salida del contrato API)
+│       │   └── PacienteDto.java (Espejo de datos para deserialización de Feign)
+│       ├── service/
+│       │   └── CitaService.java (Orquestación clínica y consumo inter-servicio)
+│       └── CitaServiceApplication.java (Clase de arranque con @EnableFeignClients)
+└── src/main/resources/
+    └── application.properties (Puerto 8002 y vinculación a Eureka)
+```
+
 ## 🚀 Instrucciones de Despliegue
 Para garantizar el correcto funcionamiento del ecosistema, es indispensable ejecutar los proyectos en el siguiente orden estricto:
 
