@@ -1,6 +1,8 @@
-# Evaluación T1: Arquitectura de Microservicios con Spring Cloud
-**Curso:** Desarrollo de Aplicaciones Web II  
+# Evaluación T1 CIBERTEC: Arquitectura de Microservicios con Spring Cloud
+**Curso:** Desarrollo de Aplicaciones Web II 
+
 **Docente:** Simon Eliad Choque Del Pozo
+
 **Alumno:** Carlos Miguel  Lazo Domínguez
 
 ## 📌 Descripción del Proyecto (Caso DentiCore)
@@ -58,26 +60,31 @@ Se adjunta en este repositorio el archivo exportado `postman_collection.json` pa
 Se evidencia la creación de la arquitectura del proyecto en general, cada proyecto con sus dependencias respectivas.
 
 **Eureka Server**
+
 ![Configuración inicial-Eureka Server](./docs/creacion_proyecto_eureka_server.png)
 
 ![Configuración inicial-Eureka Server](./docs/creacion_proyecto_eureka_server2.png)
 
 **Paciente Service**
+
 ![Configuración inicial-Paciente Service](./docs/creacion_proyecto_paciente_service.png)
 
 ![Configuración inicial-Paciente Service](./docs/creacion_proyecto_paciente_service2.png)
 
 **Cita Service**
+
 ![Configuración inicial-Cita Service](./docs/creacion_proyecto_cita_service.png)
 
 ![Configuración inicial-Cita Service](./docs/creacion_proyecto_cita_service2.png)
 
 ### 2. Entorno de Desarrollo (Spring Boot Dashboard)
 Se evidencia la ejecución simultánea e independiente de los tres proyectos en el espacio de trabajo.
+
 ![Spring Boot Dashboard](./docs/springboot-dashboard.png)
 
 ### 3. Registro en Eureka Server
 Confirmación de la etapa de descubrimiento dinámico. Los microservicios `CITA-SERVICE` y `PACIENTE-SERVICE` se encuentran registrados y en estado **UP**.
+
 ![Dashboard Eureka](./docs/dashboard-Eureka.png)
 
 ### Pruebas de Comunicación y Lógica de Negocio (POSTMAN)            
@@ -85,9 +92,15 @@ Confirmación de la etapa de descubrimiento dinámico. Los microservicios `CITA-
 ### 4. Prueba de Microservicio Proveedor (GET)
 Consulta directa y aislada a `paciente-service` para verificar la exposición de los datos clínicos.
 
+-Prueba GET Paciente con ID=1
+
 ![Prueba GET Paciente con ID=1](./docs/postman-get-paciente1.png)
 
+-Prueba GET Paciente con ID=2
+
 ![Prueba GET Paciente con ID=2](./docs/postman-get-paciente2.png)
+
+-Prueba GET Paciente con ID=3
 
 ![Prueba GET Paciente con ID=3](./docs/postman-get-paciente3.png)
 
@@ -95,12 +108,15 @@ Consulta directa y aislada a `paciente-service` para verificar la exposición de
 
 **Caso A: Cita Aprobada (Paciente 1)**
 El servicio valida que el paciente está dado de alta y no presenta riesgos.
+
 ![Prueba POST Aprobada](./docs/postman-post-id1.png)
 
 **Caso B: Cita Rechazada por Riesgo (Paciente 2)**
 El servicio intercepta la solicitud y la bloquea al detectar que el paciente requiere autorización médica.
+
 ![Prueba POST Rechazo Riesgo](./docs/postman-post-id2.png)
 
 **Caso C: Cita Rechazada por Tratamiento (Paciente 3)**
 El servicio bloquea la solicitud al detectar que el paciente mantiene un tratamiento en curso.
+
 ![Prueba POST Rechazo Tratamiento](./docs/postman-post-id3.png)
